@@ -20,8 +20,8 @@
 
 %change-->
 % -compile([{parse_transform, lager_transform}]).
-% -include("include/emqx.hrl").
-% -include("include/emqx_hooks.hrl").
+-include("include/emqx.hrl").
+-include_lib("include/emqx_hooks.hrl").
 
 % % % %% for logging
 % -include("include/logger.hrl").
@@ -167,12 +167,12 @@ on_session_terminated(_ClientInfo = #{clientid := ClientId}, Reason, SessInfo, _
 on_message_publish(Message = #message{topic = <<"$SYS/", _/binary>>}, _Env) ->
     {ok, Message};
 
-% on_message_publish(Message = #message{payload = <<"netstratum">>}, _Env) ->
-%     lager:start(),
-%     io:format("Welcome to Nestratum"),
-%     lager:error("welcome to nestratum123"),
-%     lager:info("Welcome to Nestratum1"),
-%     {ok, Message};
+on_message_publish(Message = #message{payload = <<"netstratum">>}, _Env) ->
+    % lager:start(),
+    io:format("Welcome to Nestratum"),
+    lager:error("welcome to nestratum123"),
+    lager:info("Welcome to Nestratum1"),
+    {ok, Message};
 
 on_message_publish(Message, _Env) ->
     io:format("Publish ~s~n", [emqx_message:format(Message)]),
@@ -216,14 +216,14 @@ unload() ->
     emqx:unhook('message.dropped',     {?MODULE, on_message_dropped}).
 
 
-message(#message{id = Id, qos = Qos, from = From, topic = Topic, payload = Payload, timestamp = Ts}) ->
-    [{node, node()},
-     {id, hexstr(Id)},
-     {qos, Qos},
-     {from, From},
-     {topic, Topic},
-     {payload, Payload},
-     {timestamp, Ts}].
+% message(#message{id = Id, qos = Qos, from = From, topic = Topic, payload = Payload, timestamp = Ts}) ->
+%     [{node, node()},
+%      {id, hexstr(Id)},
+%      {qos, Qos},
+%      {from, From},
+%      {topic, Topic},
+%      {payload, Payload},
+%      {timestamp, Ts}].
 
 % test(Message = #message{payload = <<"netstratum">>}) -> %when payload =:= <<"netstratum">> ->
 %     % lager:start(),
