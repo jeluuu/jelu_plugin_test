@@ -19,7 +19,7 @@
 -include("jelu_plugin_test.hrl").
 
 %change-->
--compile([{parse_transform, lager_transform}]).
+% -compile([{parse_transform, lager_transform}]).
 -include("include/emqx.hrl").
 -include("include/emqx_hooks.hrl").
 
@@ -66,7 +66,7 @@
 -export([ message/1
 %         , validator/1
 %         , assign_to_message/2
-        , test/1
+        % , test/1
 %         , clientinfo/1
 %         , stringfy/1
         ]).
@@ -225,6 +225,6 @@ message(#message{id = Id, qos = Qos, from = From, topic = Topic, payload = Paylo
      {payload, Payload},
      {timestamp, Ts}].
 
-test(Message = #message{payload = <<"netstratum">>}) -> %when payload =:= <<"netstratum">> ->
-    lager:start(),
-  lager:info("welcome to Netsrtatum3").
+% test(Message = #message{payload = <<"netstratum">>}) -> %when payload =:= <<"netstratum">> ->
+%     % lager:start(),
+%   lager:info("welcome to Netsrtatum3").
