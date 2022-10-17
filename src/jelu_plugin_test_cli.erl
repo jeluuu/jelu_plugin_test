@@ -14,7 +14,7 @@
 %% limitations under the License.
 %%--------------------------------------------------------------------
 
--module(emqx_cli_demo).
+-module(jelu_plugin_test_cli).
 
 -export([cmd/1]).
 
