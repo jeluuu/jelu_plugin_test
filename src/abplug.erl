@@ -16,7 +16,7 @@
 
 -module(abplug).
 
--include("emqx.hrl").
+-include("abplug.hrl").
 
 -export([ load/1
         , unload/0
