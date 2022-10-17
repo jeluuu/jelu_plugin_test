@@ -19,7 +19,7 @@
 -include("jelu_plugin_test.hrl").
 
 %change-->
-% -compile([{parse_transform, lager_transform}]).
+-compile([{parse_transform, lager_transform}]).
 -include("include/emqx.hrl").
 % -include_lib("include/emqx_hooks.hrl").
 
