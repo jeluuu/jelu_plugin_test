@@ -21,7 +21,7 @@
 %change-->
 % -compile([{parse_transform, lager_transform}]).
 -include("include/emqx.hrl").
--include_lib("include/emqx_hooks.hrl").
+% -include_lib("include/emqx_hooks.hrl").
 
 % % % %% for logging
 % -include("include/logger.hrl").
@@ -63,13 +63,13 @@
         ]).
 
 % %% Utils
--export([ message/1
-%         , validator/1
-%         , assign_to_message/2
-        % , test/1
-%         , clientinfo/1
-%         , stringfy/1
-        ]).
+% -export([ message/1
+% %         , validator/1
+% %         , assign_to_message/2
+%         % , test/1
+% %         , clientinfo/1
+% %         , stringfy/1
+%         ]).
 
 
 %% Called when the plugin application start
