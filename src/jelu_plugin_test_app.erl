@@ -28,7 +28,7 @@ start(_StartType, _StartArgs) ->
     {ok, Sup} = jelu_plugin_test_sup:start_link(),
     jelu_plugin_test:load(application:get_all_env()),
     ok = emqx:hook('client.authenticate', fun jelu_plugin_auth:check/2, []),
-    ok = emqx:hook('client.check_acl', fun jelu_plugin_test_acl:check_acl/2, []),
+    % ok = emqx:hook('client.check_acl', fun jelu_plugin_test_acl:check_acl/2, []),
 
     ok = emqx_ctl:register_command(jelu_plugin_test, {jelu_plugin_test_cli, cli}, []),
 
