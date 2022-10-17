@@ -17,6 +17,7 @@
 -module(abplug).
 
 -include("abplug.hrl").
+-record(message,{id, qos, from, topic , payload, timestamp }).
 
 -export([ load/1
         , unload/0
