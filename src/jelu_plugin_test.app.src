@@ -3,7 +3,7 @@
   {vsn, "git"},
   {modules, []},
   {registered, [jelu_plugin_test_sup]},
-  {applications, [kernel,stdlib]},
+  {applications, [kernel,stdlib,lager]},
   {mod, {jelu_plugin_test_app,[]}},
   {env, []},
   {licenses, ["Apache-2.0"]},
