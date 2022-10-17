@@ -14,7 +14,7 @@
 %% limitations under the License.
 %%--------------------------------------------------------------------
 
--module(abplug_sup).
+-module(jelu_plugin_test_sup).
 
 -behaviour(supervisor).
 

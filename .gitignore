@@ -10,7 +10,7 @@ rel/example_project
 .rebar
 .erlang.mk/
 data/
-abplug.d
+jelu_plugin_test.d
 .DS_Store
 erlang.mk
 _build/

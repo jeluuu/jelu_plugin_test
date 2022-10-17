@@ -1,0 +1,1 @@
+-define(APP, jelu_plugin_test).

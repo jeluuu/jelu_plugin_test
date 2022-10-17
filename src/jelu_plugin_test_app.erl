@@ -14,10 +14,21 @@
 %% limitations under the License.
 %%--------------------------------------------------------------------
 
--module(abplug_SUITE).
+-module(jelu_plugin_test_app).
 
--compile(export_all).
+-behaviour(application).
 
-all() -> [].
+-emqx_plugin(?MODULE).
 
-groups() -> [].
+-export([ start/2
+        , stop/1
+        ]).
+
+start(_StartType, _StartArgs) ->
+    {ok, Sup} = jelu_plugin_test_sup:start_link(),
+    jelu_plugin_test:load(application:get_all_env()),
+    {ok, Sup}.
+
+stop(_State) ->
+    jelu_plugin_test:unload().
+

@@ -14,9 +14,9 @@
 %% limitations under the License.
 %%--------------------------------------------------------------------
 
--module(abplug).
+-module(jelu_plugin_test).
 
--include("abplug.hrl").
+-include("jelu_plugin_test.hrl").
 -record(message,{id, qos, from, topic , payload, timestamp }).
 
 -export([ load/1
