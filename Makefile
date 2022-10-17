@@ -34,10 +34,10 @@ $(CUTTLEFISH_SCRIPT):
 	@if [ ! -f cuttlefish ]; then make -C _build/default/lib/cuttlefish; fi
 
 app.config: $(CUTTLEFISH_SCRIPT) etc/jelu_plugin_test.config
-	$(verbose) $(CUTTLEFISH_SCRIPT) -l info -e etc/ -c etc/jelu_plugin_test.config 
+	$(verbose) $(CUTTLEFISH_SCRIPT) -l info -e etc/ -c etc/jelu_plugin_test.config -i priv/jelu_plugin_test.schema
 
 DEPS = lager
 BUILD_DEPS	 = emqx 
 dep_emqx = git-emqx https://github.com/emqx/emqx $(BRANCH)
-dep_cuttlefish = git-emqx https://github.com/emqx/cuttlefish v2.2.1
+# dep_cuttlefish = git-emqx https://github.com/emqx/cuttlefish v2.2.1
 dep_lager = git-emqx https://github.com/erlang-lager/lager master
