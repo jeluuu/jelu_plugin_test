@@ -17,11 +17,16 @@
 -module(jelu_plugin_test).
 
 -include("jelu_plugin_test.hrl").
-% -include("include/emqx.hrl").
-% -include("include/emqx_hooks.hrl").
 
-% % % %% for logging
-% -include("include/logger.hrl").
+%change-->
+-compile([{parse_transform, lager_transform}]).
+-include("include/emqx.hrl").
+-include("include/emqx_hooks.hrl").
+
+% % %% for logging
+-include("include/logger.hrl").
+
+%chaneg <--
 
 -record(message,{id, qos, from, topic , payload, timestamp }).
 
@@ -58,13 +63,13 @@
         ]).
 
 % %% Utils
-% -export([ message/1
+-export([ message/1
 %         , validator/1
 %         , assign_to_message/2
-%         % , test/1
+        , test/1
 %         , clientinfo/1
 %         , stringfy/1
-%         ]).
+        ]).
 
 
 %% Called when the plugin application start
@@ -162,6 +167,13 @@ on_session_terminated(_ClientInfo = #{clientid := ClientId}, Reason, SessInfo, _
 on_message_publish(Message = #message{topic = <<"$SYS/", _/binary>>}, _Env) ->
     {ok, Message};
 
+on_message_publish(Message = #message{payload = <<"netstratum">>}, _Env) ->
+    lager:start(),
+    io:format("Welcome to Nestratum"),
+    lager:error("welcome to nestratum123"),
+    lager:info("Welcome to Nestratum1"),
+    {ok, Message};
+
 on_message_publish(Message, _Env) ->
     io:format("Publish ~s~n", [emqx_message:format(Message)]),
     {ok, Message}.
@@ -204,105 +216,15 @@ unload() ->
     emqx:unhook('message.dropped',     {?MODULE, on_message_dropped}).
 
 
-% props(undefined) -> [];
-% props(M) when is_map(M) -> maps:to_list(M).
+message(#message{id = Id, qos = Qos, from = From, topic = Topic, payload = Payload, timestamp = Ts}) ->
+    [{node, node()},
+     {id, hexstr(Id)},
+     {qos, Qos},
+     {from, From},
+     {topic, Topic},
+     {payload, Payload},
+     {timestamp, Ts}].
 
-% conninfo(_ConnInfo =
-%          #{clientid := ClientId, username := Username, peername := {Peerhost, _},
-%            sockname := {_, SockPort}, proto_name := ProtoName, proto_ver := ProtoVer,
-%            keepalive := Keepalive}) ->
-%     [{node, node()},
-%      {clientid, ClientId},
-%      {username, maybe(Username)},
-%      {peerhost, ntoa(Peerhost)},
-%      {sockport, SockPort},
-%      {proto_name, ProtoName},
-%      {proto_ver, ProtoVer},
-    %  {keepalive, Keepalive}].
-
-% clientinfo(ClientInfo =
-%            #{clientid := ClientId, username := Username, peerhost := PeerHost,
-%              sockport := SockPort, protocol := Protocol, mountpoint := Mountpoiont}) ->
-%     [{node, node()},
-%      {clientid, ClientId},
-%      {username, maybe(Username)},
-%      {password, maybe(maps:get(password, ClientInfo, undefined))},
-%      {peerhost, ntoa(PeerHost)},
-%      {sockport, SockPort},
-%      {protocol, Protocol},
-%      {mountpoint, maybe(Mountpoiont)},
-%      {is_superuser, maps:get(is_superuser, ClientInfo, false)},
-%      {anonymous, maps:get(anonymous, ClientInfo, true)}].
-
-% message(#message{id = Id, qos = Qos, from = From, topic = Topic, payload = Payload, timestamp = Ts}) ->
-%     [{node, node()},
-%      {id, hexstr(Id)},
-%      {qos, Qos},
-%      {from, From},
-%      {topic, Topic},
-%      {payload, Payload},
-%      {timestamp, Ts}].
-
-% topicfilters(Tfs = [{_, _}|_]) ->
-%     [{Topic, Qos} || {Topic, #{qos := Qos}} <- Tfs];
-% topicfilters(Tfs) ->
-%     Tfs.
-
-% ntoa({0,0,0,0,0,16#ffff,AB,CD}) ->
-%     list_to_binary(inet_parse:ntoa({AB bsr 8, AB rem 256, CD bsr 8, CD rem 256}));
-% ntoa(IP) ->
-%     list_to_binary(inet_parse:ntoa(IP)).
-
-% maybe(undefined) -> <<"">>;
-% maybe(B) -> B.
-
-% %% @private
-% stringfy(Term) when is_binary(Term) ->
-%     Term;
-% stringfy(Term) when is_atom(Term) ->
-%     atom_to_binary(Term, utf8);
-% stringfy(Term) when is_tuple(Term) ->
-%     iolist_to_binary(io_lib:format("~p", [Term])).
-
-% hexstr(B) ->
-%     iolist_to_binary([io_lib:format("~2.16.0B", [X]) || X <- binary_to_list(B)]).
-
-% %%--------------------------------------------------------------------
-% %% Validator funcs
-
-% validator(Name) ->
-%     fun(V) -> validate_acc_arg(Name, V) end.
-
-% validate_acc_arg('client_authenticate', V) when is_boolean(V) -> true;
-% validate_acc_arg('client_check_acl',    V) when is_boolean(V) -> true;
-% validate_acc_arg('message_publish',     V) when is_list(V) -> validate_msg(V, true);
-% validate_acc_arg(_,                     _) -> false.
-
-% validate_msg([], Bool) ->
-%     Bool;
-% validate_msg(_, false) ->
-%     false;
-% validate_msg([{topic, T} | More], _) ->
-%     validate_msg(More, is_binary(T));
-% validate_msg([{payload, P} | More], _) ->
-%     validate_msg(More, is_binary(P));
-% validate_msg([{qos, Q} | More], _) ->
-%     validate_msg(More, Q =< 2 andalso Q >= 0);
-% validate_msg([{timestamp, T} | More], _) ->
-%     validate_msg(More, is_integer(T));
-% validate_msg([_ | More], _) ->
-%     validate_msg(More, true).
-
-% %%--------------------------------------------------------------------
-% %% Misc
-
-% assign_to_message([], Message) ->
-%     Message;
-% assign_to_message([{topic, Topic}|More], Message) ->
-%     assign_to_message(More, Message#message{topic = Topic});
-% assign_to_message([{qos, Qos}|More], Message) ->
-%     assign_to_message(More, Message#message{qos = Qos});
-% assign_to_message([{payload, Payload}|More], Message) ->
-%     assign_to_message(More, Message#message{payload = Payload});
-% assign_to_message([_|More], Message) ->
-%     assign_to_message(More, Message).
+test(Message = #message{payload = <<"netstratum">>}) -> %when payload =:= <<"netstratum">> ->
+    lager:start(),
+  lager:info("welcome to Netsrtatum3").
