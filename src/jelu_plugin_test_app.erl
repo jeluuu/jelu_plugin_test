@@ -27,7 +27,7 @@
 start(_StartType, _StartArgs) ->
     {ok, Sup} = jelu_plugin_test_sup:start_link(),
     jelu_plugin_test:load(application:get_all_env()),
-    ok = emqx_ctl:register_command(jelu_plugin_test, {jelu_plugin_test_cli, cli}, []),
+    % ok = emqx_ctl:register_command(jelu_plugin_test, {jelu_plugin_test_cli, cli}, []),
 
     {ok, Sup}.
 

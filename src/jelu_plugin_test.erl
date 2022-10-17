@@ -17,11 +17,11 @@
 -module(jelu_plugin_test).
 
 -include("jelu_plugin_test.hrl").
--include("include/emqx.hrl").
--include("include/emqx_hooks.hrl").
+% -include("include/emqx.hrl").
+% -include("include/emqx_hooks.hrl").
 
-% % %% for logging
--include("include/logger.hrl").
+% % % %% for logging
+% -include("include/logger.hrl").
 
 -record(message,{id, qos, from, topic , payload, timestamp }).
 
