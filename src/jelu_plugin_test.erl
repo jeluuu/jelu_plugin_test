@@ -167,12 +167,12 @@ on_session_terminated(_ClientInfo = #{clientid := ClientId}, Reason, SessInfo, _
 on_message_publish(Message = #message{topic = <<"$SYS/", _/binary>>}, _Env) ->
     {ok, Message};
 
-on_message_publish(Message = #message{payload = <<"netstratum">>}, _Env) ->
-    lager:start(),
-    io:format("Welcome to Nestratum"),
-    lager:error("welcome to nestratum123"),
-    lager:info("Welcome to Nestratum1"),
-    {ok, Message};
+% on_message_publish(Message = #message{payload = <<"netstratum">>}, _Env) ->
+%     lager:start(),
+%     io:format("Welcome to Nestratum"),
+%     lager:error("welcome to nestratum123"),
+%     lager:info("Welcome to Nestratum1"),
+%     {ok, Message};
 
 on_message_publish(Message, _Env) ->
     io:format("Publish ~s~n", [emqx_message:format(Message)]),
