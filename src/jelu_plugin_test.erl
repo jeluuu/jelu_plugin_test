@@ -178,11 +178,11 @@ on_message_publish(Message, _Env) ->
     % io:format("Publish ~s~n", [emqx_message:format(Message)]),
     {ok, Message}.
 
-on_message_dropped(#message{topic = <<"$SYS/", _/binary>>}, _By, _Reason, _Env) ->
-    ok;
-on_message_dropped(Message, _By = #{node := Node}, Reason, _Env) ->
-    io:format("Message dropped by node ~s due to ~s: ~s~n",
-              [Node, Reason, emqx_message:format(Message)]).
+% on_message_dropped(#message{topic = <<"$SYS/", _/binary>>}, _By, _Reason, _Env) ->
+%     ok;
+% on_message_dropped(Message, _By = #{node := Node}, Reason, _Env) ->
+%     io:format("Message dropped by node ~s due to ~s: ~s~n",
+%               [Node, Reason, emqx_message:format(Message)]).
 
 on_message_delivered(_ClientInfo = #{clientid := ClientId}, Message, _Env) ->
     io:format("Message delivered to client(~s): ~s~n",
