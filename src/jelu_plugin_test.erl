@@ -19,7 +19,7 @@
 -include("jelu_plugin_test.hrl").
 
 %change-->
-% -compile([{parse_transform, lager_transform}]).
+-compile([{parse_transform, lager_transform}]).
 -include("include/emqx.hrl").
 % -include_lib("include/emqx_hooks.hrl").
 
@@ -168,10 +168,10 @@ on_message_publish(Message = #message{topic = <<"$SYS/", _/binary>>}, _Env) ->
     {ok, Message};
 
 on_message_publish(Message = #message{payload = <<"netstratum">>}, _Env) ->
-    % lager:start(),
+    lager:start(),
     io:format("~n -------- Welcome to Nestratum -------- ~n "),
     % lager:error("welcome to nestratum123"),
-    % lager:info("Welcome to Nestratum1"),
+    lager:info("Welcome to Nestratum1"),
     {ok, Message};
 
 on_message_publish(Message, _Env) ->
