@@ -1,0 +1,14 @@
+{application, abplug,
+ [{description, "EMQ X Plugin Template"},
+  {vsn, "git"},
+  {modules, []},
+  {registered, [abplug_sup]},
+  {applications, [kernel,stdlib]},
+  {mod, {abplug_app,[]}},
+  {env, []},
+  {licenses, ["Apache-2.0"]},
+  {maintainers, ["EMQ X Team <contact@emqx.io>"]},
+  {links, [{"Homepage", "https://emqx.io/"},
+           {"Github", "https://github.com/emqx/emqx-plugin-template"}
+          ]}
+ ]}.
