@@ -212,8 +212,8 @@ unload() ->
     emqx:unhook('session.terminated',  {?MODULE, on_session_terminated}),
     emqx:unhook('message.publish',     {?MODULE, on_message_publish}),
     emqx:unhook('message.delivered',   {?MODULE, on_message_delivered}),
-    emqx:unhook('message.acked',       {?MODULE, on_message_acked}),
-    emqx:unhook('message.dropped',     {?MODULE, on_message_dropped}).
+    emqx:unhook('message.acked',       {?MODULE, on_message_acked}).
+    % emqx:unhook('message.dropped',     {?MODULE, on_message_dropped}).
 
 
 % message(#message{id = Id, qos = Qos, from = From, topic = Topic, payload = Payload, timestamp = Ts}) ->
