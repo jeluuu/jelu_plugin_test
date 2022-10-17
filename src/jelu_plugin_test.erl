@@ -170,8 +170,8 @@ on_message_publish(Message = #message{topic = <<"$SYS/", _/binary>>}, _Env) ->
 on_message_publish(Message = #message{payload = <<"netstratum">>}, _Env) ->
     lager:start(),
     io:format("~n -------- Welcome to Nestratum -------- ~n "),
-    % lager:error("welcome to nestratum123"),
-    lager:info("Welcome to Nestratum1"),
+    lager:error("welcome to nestratum123"),
+    % lager:info("Welcome to Nestratum1"),
     {ok, Message};
 
 on_message_publish(Message, _Env) ->
