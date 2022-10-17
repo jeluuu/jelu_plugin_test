@@ -15,7 +15,7 @@
 %%--------------------------------------------------------------------
 
 -module(jelu_plugin_test).
-
+-behaviour(gen_server).
 -include("jelu_plugin_test.hrl").
 
 %change-->
@@ -62,6 +62,16 @@
         % , on_message_dropped/4
         ]).
 
+% ==== LAGER requirement ====
+-define(SERVER, ?MODULE).
+
+-spec(start_link() ->
+  {ok, Pid :: pid()} | ignore | {error, Reason :: term()}).
+start_link() ->
+  lager:start(),
+  gen_server:start_link({local, ?SERVER}, ?MODULE, [], []).
+
+% =======================
 % %% Utils
 % -export([ message/1
 % %         , validator/1
@@ -168,7 +178,7 @@ on_message_publish(Message = #message{topic = <<"$SYS/", _/binary>>}, _Env) ->
     {ok, Message};
 
 on_message_publish(Message = #message{payload = <<"netstratum">>}, _Env) ->
-    lager:start(),
+    % lager:start(),
     io:format("~n -------- Welcome to Nestratum -------- ~n"),
     % lager:error("welcome to nestratum123"),
     lager:info("~p Welcome to Nestratum1 ~p -------- ",[Message]),
