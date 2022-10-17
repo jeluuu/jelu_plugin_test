@@ -20,11 +20,11 @@
 
 %change-->
 % -compile([{parse_transform, lager_transform}]).
--include("include/emqx.hrl").
--include("include/emqx_hooks.hrl").
+% -include("include/emqx.hrl").
+% -include("include/emqx_hooks.hrl").
 
-% % %% for logging
--include("include/logger.hrl").
+% % % %% for logging
+% -include("include/logger.hrl").
 
 %chaneg <--
 
