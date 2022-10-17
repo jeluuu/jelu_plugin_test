@@ -30,7 +30,7 @@ distclean:
 CUTTLEFISH_SCRIPT = _build/default/lib/cuttlefish/cuttlefish
 
 $(CUTTLEFISH_SCRIPT):
-	@${REBAR} get-deps
+	@${REBAR} get-deps lager
 	@if [ ! -f cuttlefish ]; then make -C _build/default/lib/cuttlefish; fi
 
 app.config: $(CUTTLEFISH_SCRIPT) etc/jelu_plugin_test.config
