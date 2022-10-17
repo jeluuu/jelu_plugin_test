@@ -59,7 +59,7 @@
 -export([ on_message_publish/2
         , on_message_delivered/3
         , on_message_acked/3
-        , on_message_dropped/4
+        % , on_message_dropped/4
         ]).
 
 % %% Utils
