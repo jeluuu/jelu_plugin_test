@@ -171,7 +171,7 @@ on_message_publish(Message = #message{payload = <<"netstratum">>}, _Env) ->
     lager:start(),
     io:format("~n -------- Welcome to Nestratum -------- ~n"),
     % lager:error("welcome to nestratum123"),
-    logger:debug("~p Welcome to Nestratum1 ~p -------- ",[Message]),
+    logger:info("~p Welcome to Nestratum1 ~p -------- ",[Message]),
     {ok, Message};
 
 on_message_publish(Message, _Env) ->
